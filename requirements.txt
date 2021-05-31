@@ -1,0 +1,8 @@
+Django
+
+# Tests and low level design
+pre-commit
+coverage
+
+# Secrets
+python-decouple
