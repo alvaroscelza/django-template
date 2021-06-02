@@ -53,7 +53,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # region Internationalization
-
 LANGUAGE_CODE = 'es'
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 LANGUAGES = [('es', _('Spanish'))]
@@ -61,16 +60,11 @@ TIME_ZONE = 'America/Montevideo'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-
 # endregion
 
-# region Static and Media files
-
+# region Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_storage')
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 # endregion
