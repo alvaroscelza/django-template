@@ -4,6 +4,8 @@ from pathlib import Path
 from decouple import config
 from django.utils.translation import gettext_lazy as _
 
+APP_NAME = '<<app name>>'
+APP_DESCRIPTION = _('<<app description>>')
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', },
