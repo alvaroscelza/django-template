@@ -1,0 +1,21 @@
+{% extends "admin/change_list.html" %}
+
+{% block object-tools-items %}
+  {{ block.super }}
+
+  <script type="text/javascript">
+    (function($) {
+        $(document).ready(function() {
+            $('#result_list tbody tr').each(function() {
+                let amount_cell = $(this).find($('.field-amount'))
+                let amount = parseFloat(amount_cell.text());
+                if (amount < 0) {
+                  amount_cell.css('background-color', "LightCoral");
+                } else {
+                  amount_cell.css('background-color', "DarkSeaGreen");
+                }
+            });
+        });
+    })(django.jQuery);
+    </script>
+{% endblock %}

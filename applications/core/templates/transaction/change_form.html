@@ -1,0 +1,29 @@
+{% extends "admin/change_form.html" %}
+
+{% block admin_change_form_document_ready %}
+    {{ block.super }}
+
+    <script type="text/javascript">
+        (function($) {
+            $(document.getElementsByName("_addanother")).click(function( event ) {
+                handleSave();
+            });
+            $(document.getElementsByName("_continue")).click(function( event ) {
+                handleSave();
+            });
+            $(document.getElementsByName("_save")).click(function( event ) {
+                handleSave();
+            });
+        })(django.jQuery);
+
+        function handleSave() {
+            date_input = document.getElementsByName("date");
+            date = date_input[0].value
+            date_parts = date.split("/");
+            if (date_parts.length == 2) {
+              date = "01/" + date
+              date_input[0].value = date
+            }
+        }
+    </script>
+{% endblock %}
