@@ -21,7 +21,9 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles'
 ]
-LOCAL_APPS = []
+LOCAL_APPS = [
+    'applications.core.apps.CoreConfig'
+]
 EXTERNAL_APPS = []
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + EXTERNAL_APPS
 MIDDLEWARE = [
