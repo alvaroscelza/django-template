@@ -65,6 +65,7 @@ USE_TZ = True
 # endregion
 
 # region Static files (CSS, JavaScript, Images)
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_storage')
 MEDIA_URL = "/media/"
