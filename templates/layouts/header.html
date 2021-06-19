@@ -1,6 +1,8 @@
+{% load generic_helper %}
+
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
-    <a id="logo" href="">{{app_name}}</a>
+    <a id="logo" href="">{% current_page_title %}</a>
     <nav>
       <ul class="nav navbar-nav">
         <li><a href="">First Link</a></li>
