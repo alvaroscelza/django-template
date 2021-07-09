@@ -24,4 +24,4 @@
 ## Testing
 
 - Run the tests with `python manage.py test`
-- Get test coverage with `coverage run --source='.' manage.py test` and then `coverage report`
+- Get test coverage with `coverage run --source='.' manage.py test` and then `coverage report --skip-covered`
