@@ -8,9 +8,7 @@
 - Enter environment: Example: `venv\Scripts\activate`
 - `pip install -r requirements.txt`
 - `pre-commit install`
-- Create an .env file at project root for storing secrets. File .env-example is provided as a guide of this file's 
-  content. Make sure you copy your SECRET_KEY there. (You can use
-  [Djecrety](https://djecrety.ir/), or any other token generator to generate Settings SECRET_KEY)
+- Create an .env file at project root for storing secrets. File .env-example is provided as a guide of this file's content. Make sure you copy your SECRET_KEY there.
 - `python manage.py makemigrations`
 - `python manage.py migrate`
 - `python manage.py createsuperuser`
@@ -24,4 +22,4 @@
 ## Testing
 
 - Run the tests with `python manage.py test`
-- Get test coverage with `coverage run --source='.' manage.py test` and then `coverage report --skip-covered`
+- Get test coverage with `coverage run --source='.' manage.py test` and then `coverage report --skip-covered --show-missing`
