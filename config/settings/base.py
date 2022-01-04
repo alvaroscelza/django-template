@@ -21,7 +21,7 @@ DJANGO_APPS = [
     'django.contrib.staticfiles'
 ]
 LOCAL_APPS = [
-    'applications.apps.Core'
+    'applications.apps.CoreConfig'
 ]
 EXTERNAL_APPS = []
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + EXTERNAL_APPS
