@@ -1,4 +1,6 @@
+# WEB / API
 Django
+djangorestframework
 
 # Tests and low level design
 pre-commit
