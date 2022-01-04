@@ -3,6 +3,7 @@ Django
 # Tests and low level design
 pre-commit
 coverage
+factory-boy
 
 # Secrets
 python-dotenv
