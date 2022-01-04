@@ -35,6 +35,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+REST_FRAMEWORK = {
+    'DATETIME_FORMAT': '%Y-%m-%d %H:%M:%S.%f',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'EXCEPTION_HANDLER': 'backend.applications.utils.exception_handler',
+    'PAGE_SIZE': 10
+}
 ROOT_URLCONF = 'config.urls'
 SECRET_KEY = os.getenv('SECRET_KEY')
 TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
