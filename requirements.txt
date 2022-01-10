@@ -7,5 +7,5 @@ pre-commit
 coverage
 factory-boy
 
-# Secrets
+# Environment
 python-dotenv
