@@ -4,7 +4,7 @@
 
 ## Technology Stack
 
--   Python 3.9.1
+-   Python 3.10.3
 -   Django 4
 
 ## Installation and running
@@ -16,11 +16,11 @@
 -   Install requirements:
     -   Development: `pip install -r requirements/development.txt`
     -   Production: `pip install -r requirements/base.txt`
--   `pre-commit install`
--   Create an .env file at project root for storing secrets. File .env-example is provided as a guide of this file's content. Make sure you copy your SECRET_KEY there.
--   `python manage.py makemigrations`
--   `python manage.py migrate`
--   `python manage.py createsuperuser`
+-   Install pre-commit hooks feature: `pre-commit install`
+-   Create an `.env` file at project root for storing secrets. File .env-example is provided as a guide of this file's content. Make sure you copy your SECRET_KEY there.
+-   Generate migration files: `python manage.py makemigrations`
+-   Run migrations: `python manage.py migrate`
+-   Create superuser: `python manage.py createsuperuser`
 -   Run using `python manage.py runserver`
 
 ### With Docker
@@ -34,7 +34,9 @@
 ### Without Docker
 
 -   Run the tests with `python manage.py test`
--   Get test coverage with `coverage run --source='.' manage.py test` and then `coverage report --skip-covered --show-missing`
+- Get test coverage with:
+  - `coverage run --source='.' manage.py test`
+  - `coverage report --skip-covered --show-missing`
 
 ### With Docker
 
@@ -42,4 +44,4 @@
 -   Run the tests with `docker-compose run web python manage.py test`
 -   Get test coverage with:
     -   `docker-compose run web coverage run --source='.' manage.py test`
-    -   `docker-compose run web coverage run --source='.' manage.py test`
+    -   `docker-compose run web coverage report --skip-covered --show-missing`
