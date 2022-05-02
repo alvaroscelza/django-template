@@ -15,7 +15,7 @@
 -   Enter environment: Example: `venv\Scripts\activate`
 -   Install requirements:
     -   Development: `pip install -r requirements/development.txt`
-    -   Production: `pip install -r requirements/base.txt`
+    -   Production: `pip install -r requirements/production.txt`
 -   Install pre-commit hooks feature: `pre-commit install`
 -   Create an `.env` file at project root for storing secrets. File .env-example is provided as a guide of this file's content. Make sure you copy your SECRET_KEY there.
 -   Generate migration files: `python manage.py makemigrations`
