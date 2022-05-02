@@ -25,6 +25,7 @@ LOCAL_APPS = [
 ]
 EXTERNAL_APPS = [
     'rest_framework',
+    'drf_yasg'
 ]
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + EXTERNAL_APPS
 MIDDLEWARE = [
