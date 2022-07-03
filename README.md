@@ -11,17 +11,18 @@
 
 ### Without Docker
 
--   Create virtual environment and activate it. Example: `virtualenv venv`
--   Enter environment: Example: `venv\Scripts\activate`
--   Install requirements:
+- Create virtual environment and activate it. Example: `virtualenv venv`
+- Enter environment: Example: `venv\Scripts\activate`
+- Install requirements:
     -   Development: `pip install -r requirements/development.txt`
     -   Production: `pip install -r requirements/production.txt`
--   Install pre-commit hooks feature: `pre-commit install`
--   Create an `.env` file at project root for storing secrets. File .env-example is provided as a guide of this file's content. Make sure you copy your SECRET_KEY there.
--   Generate migration files: `python manage.py makemigrations`
--   Run migrations: `python manage.py migrate`
--   Create superuser: `python manage.py createsuperuser`
--   Run using `python manage.py runserver`
+- Install pre-commit hooks feature: `pre-commit install`
+- Create an `.env` file at project root for storing secrets. File .env-example is provided as a guide of this file's content. Make sure you copy your SECRET_KEY there.
+- Generate migration files: `python manage.py makemigrations`
+- Run migrations: `python manage.py migrate`
+- Create superuser: `python manage.py createsuperuser`
+- Run using `python manage.py runserver`
+- To see the documentation diagrams you require [Graphviz](https://graphviz.org/).
 
 ### With Docker
 
