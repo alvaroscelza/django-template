@@ -1,8 +1,8 @@
 import os
+from django.utils.translation import gettext_lazy as _
 from pathlib import Path
 
-from django.utils.translation import gettext_lazy as _
-
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 APP_NAME = '<<app name>>'
 APP_DESCRIPTION = _('<<app description>>')
 AUTH_PASSWORD_VALIDATORS = [
@@ -12,6 +12,18 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', },
 ]
 BASE_DIR = Path(__file__).parent.parent.parent
+CORS_ALLOW_ALL_ORIGINS = True
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.getenv('DATABASE_NAME', 'db.sqlite3'),
+        'USER': os.getenv('DATABASE_USER', None),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', None),
+        'HOST': os.getenv('DATABASE_HOST', None),
+        'PORT': os.getenv('DATABASE_PORT', None),
+    }
+}
+DEBUG = os.getenv('DEBUG', False)
 DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
