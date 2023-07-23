@@ -39,5 +39,5 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # endregion
 
 # region Templates configuration
-urlpatterns = i18n_patterns(path('', TemplateView.as_view(template_name="index.html")), prefix_default_language=False)
+urlpatterns += i18n_patterns(path('', TemplateView.as_view(template_name="index.html")), prefix_default_language=False)
 # endregion
