@@ -6,4 +6,4 @@ register = template.Library()
 
 @register.simple_tag
 def current_page_title(page_name=''):
-    return settings.APP_NAME + page_name
+    return f'{page_name} | {settings.APP_NAME}' if page_name else settings.APP_NAME

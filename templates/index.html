@@ -1,4 +1,9 @@
 {% extends "layouts/main.html" %}
+{% load generic_helper %}
+
+{% block title %}
+<title>{% current_page_title "Home" %}</title>
+{% endblock %}
 
 {% block content %}
     <h1>Welcome</h1>
