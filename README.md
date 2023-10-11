@@ -4,8 +4,9 @@
 
 ## Technology Stack
 
-- Python 3.10.3
+- Python 3.11
 - Django 4
+- PostgreSQL 15
 
 ## Installation and running
 

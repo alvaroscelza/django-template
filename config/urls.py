@@ -34,6 +34,11 @@ core_path = path('api/v1/core/', include('applications.core.urls'))
 urlpatterns += i18n_patterns(core_path, prefix_default_language=False)
 # endregion
 
+# region Tenant configuration
+tenants_path = path('api/v1/tenants/', include('applications.tenants.urls'))
+urlpatterns += i18n_patterns(tenants_path, prefix_default_language=False)
+# endregion
+
 # region Media configuration
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # endregion
