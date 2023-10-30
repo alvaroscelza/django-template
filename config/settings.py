@@ -25,8 +25,8 @@ DATABASES = {
     }
     # TODO: choose to use postgres, or delete to keep using sqlite3
     # 'default': {
-    #     'ENGINE': 'django_tenants.postgresql_backend',
-    #     'NAME': os.getenv('DATABASE_NAME', 'taurus'),
+    #     'ENGINE': 'django_tenants.postgresql_backend', # or 'django.db.backends.postgresql_psycopg2'
+    #     'NAME': os.getenv('DATABASE_NAME'),
     #     'USER': os.getenv('DATABASE_USER', 'postgres'),
     #     'PASSWORD': os.getenv('DATABASE_PASSWORD', 'postgres'),
     #     'HOST': os.getenv('DATABASE_HOST', 'localhost'),
@@ -168,7 +168,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             'libraries': {
-                'generic_helper': 'templatetags.generic_helper',
+                'generic_helper': 'templatetags.custom_tags',
             },
         },
     },
