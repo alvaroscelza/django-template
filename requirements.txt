@@ -1,5 +1,5 @@
 # WEB / API
-Django
+django
 djangorestframework
 drf-yasg
 djangorestframework-simplejwt
