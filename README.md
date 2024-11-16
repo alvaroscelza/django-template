@@ -15,7 +15,6 @@
 - Create virtual environment. Example: `virtualenv venv`
 - Enter environment: Example: `venv\Scripts\activate`
 - Install requirements: `pip install -r requirements.dev.txt`
-- Install pre-commit hooks feature: `pre-commit install`
 - Create `.env` file at project root. File .env-example is provided as a guide of this file's content.
 - Generate migration files: `python manage.py makemigrations`
 - Run migrations: `python manage.py migrate`

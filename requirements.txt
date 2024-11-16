@@ -16,8 +16,14 @@ drf-excel
 beautifulsoup4
 xlrd
 
+#Emails
+certifi
+
 # Environment
 python-dotenv
+
+# Image handling
+Pillow
 
 # Utils
 python-dateutil
