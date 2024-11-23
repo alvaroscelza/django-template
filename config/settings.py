@@ -50,7 +50,12 @@ DOMAIN = os.getenv('DOMAIN', 'localhost')
 # ]
 # EXTERNAL_APPS = [
 #     'rest_framework',
-#     'drf_yasg'
+#     'rest_framework_simplejwt',
+#     'corsheaders',
+#     'drf_spectacular',
+#     'django_filters',
+#     'drf_excel',
+#     'debug_toolbar',
 # ]
 # INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + EXTERNAL_APPS
 # TODO: keep this to use multi tenant
@@ -68,6 +73,7 @@ DOMAIN = os.getenv('DOMAIN', 'localhost')
 #     'rest_framework',
 #     'rest_framework_simplejwt',
 #     'corsheaders',
+#     'drf_spectacular',
 #     'django_filters',
 #     'drf_excel',
 #
