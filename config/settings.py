@@ -174,7 +174,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             'libraries': {
-                'generic_helper': 'templatetags.custom_tags',
+                'custom_tags': 'templatetags.custom_tags',
             },
         },
     },
