@@ -10,11 +10,7 @@ from drf_yasg.views import get_schema_view
 
 def health_check(_):
     get_user_model().objects.first()
-    return JsonResponse({
-        'status': 'ok',
-        'message': 'Application is running',
-        'database': 'Connection successful'
-    })
+    return JsonResponse({'status': 'ok', 'message': 'Application is running', 'database': 'Connection successful'})
 
 # region Admin configuration
 urlpatterns = i18n_patterns(path('admin/', admin.site.urls), prefix_default_language=False)

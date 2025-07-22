@@ -19,22 +19,13 @@ CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost').spl
 DATABASE_ROUTERS = ('django_tenants.routers.TenantSyncRouter',)
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.getenv('DATABASE_NAME', 'db.sqlite3'),
-        'USER': os.getenv('DATABASE_USER', None),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD', None),
-        'HOST': os.getenv('DATABASE_HOST', None),
-        'PORT': os.getenv('DATABASE_PORT', None),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # or 'django_tenants.postgresql_backend'
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER', 'postgres'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'postgres'),
+        'HOST': os.getenv('DATABASE_HOST', 'localhost'),
+        'PORT': os.getenv('DATABASE_PORT', '5432'),
     }
-    # TODO: choose to use postgres, or delete to keep using sqlite3
-    # 'default': {
-    #     'ENGINE': 'django_tenants.postgresql_backend', # or 'django.db.backends.postgresql_psycopg2'
-    #     'NAME': os.getenv('DATABASE_NAME'),
-    #     'USER': os.getenv('DATABASE_USER', 'postgres'),
-    #     'PASSWORD': os.getenv('DATABASE_PASSWORD', 'postgres'),
-    #     'HOST': os.getenv('DATABASE_HOST', 'localhost'),
-    #     'PORT': os.getenv('DATABASE_PORT', '5432'),
-    # }
 }
 DEBUG = os.getenv('DEBUG', False)
 DOMAIN = os.getenv('DOMAIN', 'localhost')
