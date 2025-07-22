@@ -1,13 +1,12 @@
 from abc import ABC
 
-from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import ModelViewSet
 
 
-class ReadableWritableModelView(viewsets.ModelViewSet, ABC):
-    permission_classes = [IsAuthenticated]
+class ReadableWritableModelController(ModelViewSet, ABC):
     writable_serializer = None
     readable_serializer = None
+    filterset_fields = '__all__'
 
     def get_serializer_class(self):
         if self.action == 'list' or self.action == 'retrieve':

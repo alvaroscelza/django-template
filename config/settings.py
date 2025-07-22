@@ -1,6 +1,8 @@
 import os
-from django.utils.translation import gettext_lazy as _
+from datetime import timedelta
 from pathlib import Path
+
+from django.utils.translation import gettext_lazy as _
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 APP_NAME = '<<app name>>'
@@ -13,6 +15,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 BASE_DIR = Path(__file__).parent.parent
 CORS_ALLOW_ALL_ORIGINS = True
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost').split(',')
 DATABASE_ROUTERS = ('django_tenants.routers.TenantSyncRouter',)
 DATABASES = {
     'default': {
@@ -101,12 +104,16 @@ DOMAIN = os.getenv('DOMAIN', 'localhost')
 # endregion INSTALLED_APPS
 # region Internationalization
 LANGUAGE_CODE = 'es'
-LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 LANGUAGES = [('es', _('Spanish'))]
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 TIME_ZONE = 'America/Montevideo'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+USE_DECIMAL_SEPARATOR = True
+DECIMAL_SEPARATOR = ','
+USE_THOUSAND_SEPARATOR = True
+THOUSAND_SEPARATOR = '.'
 # endregion
 MIDDLEWARE = [
     'django_tenants.middleware.main.TenantMainMiddleware',
@@ -124,31 +131,25 @@ REST_FRAMEWORK = {
     'COERCE_DECIMAL_TO_STRING': False,
     'DATETIME_FORMAT': '%Y-%m-%d %H:%M:%S.%f',
     'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework_simplejwt.authentication.JWTAuthentication'],
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-        'drf_excel.renderers.XLSXRenderer',
-    ],
-    'DEFAULT_FILTER_BACKENDS': [
-        'django_filters.rest_framework.DjangoFilterBackend',
-        'rest_framework.filters.OrderingFilter',
-        'rest_framework.filters.SearchFilter'
-    ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],
+    'DEFAULT_RENDERER_CLASSES': ['rest_framework.renderers.JSONRenderer',
+                                 'rest_framework.renderers.BrowsableAPIRenderer'],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend',
+                                'rest_framework.filters.OrderingFilter',
+                                'rest_framework.filters.SearchFilter'],
     'EXCEPTION_HANDLER': 'applications.utils.exception_handler',
     'PAGE_SIZE': 10
 }
 ROOT_URLCONF = 'config.urls'
 SECRET_KEY = os.getenv('SECRET_KEY')
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
-}
+SIMPLE_JWT = {'ACCESS_TOKEN_LIFETIME': timedelta(days=30)}
 # region Static files (CSS, JavaScript, Images)
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_storage')
-MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_storage')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 # endregion
 SWAGGER_SETTINGS = {
     'USE_SESSION_AUTH': False,
@@ -161,25 +162,14 @@ SWAGGER_SETTINGS = {
     }
 }
 TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-            'libraries': {
-                'custom_tags': 'templatetags.custom_tags',
-            },
-        },
-    },
-]
-TENANT_MODEL = 'tenants.Organization'
+TEMPLATES = [{'BACKEND': 'django.template.backends.django.DjangoTemplates',
+              'DIRS': [TEMPLATE_DIR],
+              'APP_DIRS': True,
+              'OPTIONS': {'context_processors': ['django.template.context_processors.debug',
+                                                 'django.template.context_processors.request',
+                                                 'django.contrib.auth.context_processors.auth',
+                                                 'django.contrib.messages.context_processors.messages']}}]
+TENANT_MODEL = 'tenants.Tenant'
 TENANT_DOMAIN_MODEL = 'tenants.Domain'
 TEST_RUNNER = 'applications.core.tests.en_test_runner.EnTestRunner'
 WSGI_APPLICATION = 'config.wsgi.application'

@@ -8,6 +8,14 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 
 
+def health_check(_):
+    get_user_model().objects.first()
+    return JsonResponse({
+        'status': 'ok',
+        'message': 'Application is running',
+        'database': 'Connection successful'
+    })
+
 # region Admin configuration
 urlpatterns = i18n_patterns(path('admin/', admin.site.urls), prefix_default_language=False)
 admin.site.site_header = settings.APP_NAME
@@ -17,12 +25,8 @@ admin.site.site_title = settings.APP_NAME
 
 # region Swagger configuration
 schema_view = get_schema_view(
-    openapi.Info(
-        title=settings.APP_NAME + 'API',
-        default_version='v1',
-        description=settings.APP_DESCRIPTION,
-        contact=openapi.Contact(email='skollars.software.development@gmail.com')
-    ),
+    openapi.Info(title=settings.APP_NAME + 'API', default_version='v1', description=settings.APP_DESCRIPTION,
+                 contact=openapi.Contact(email='skollars.software.development@gmail.com')),
     public=True
 )
 swagger_path = path('api/v1/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger')
@@ -44,6 +48,7 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # endregion
 
-# region Templates configuration
+# region Public Routes
 urlpatterns += i18n_patterns(path('', TemplateView.as_view(template_name="index.html")), prefix_default_language=False)
+urlpatterns += i18n_patterns(path('healthcheck/', health_check), prefix_default_language=False)
 # endregion

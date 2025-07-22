@@ -8,7 +8,7 @@ drf-spectacular
 
 # Database
 django-tenants
-psycopg2-binary
+psycopg[binary]
 
 # Excel creation
 openpyxl
@@ -26,4 +26,6 @@ python-dotenv
 Pillow
 
 # Utils
+django-debug-toolbar
+setuptools
 python-dateutil

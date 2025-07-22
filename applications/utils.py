@@ -1,4 +1,7 @@
+import logging
+
 from django.core.exceptions import ValidationError as DjangoValidationError
+from django.db import IntegrityError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import ValidationError as DRFValidationError
@@ -20,7 +23,10 @@ def exception_handler(exc, context):
     Handle Django ValidationError as an accepted exception by DRF.
     For the parameters, see ``exception_handler``
     """
-
     if isinstance(exc, DjangoValidationError):
         exc = DRFValidationError(detail=exc.message_dict)
+    if isinstance(exc, IntegrityError):
+        exc = DRFValidationError(detail=exc)
+    logger = logging.getLogger(__name__)
+    logger.error(f"Exception occurred: {exc}", exc_info=True)
     return drf_exception_handler(exc, context)

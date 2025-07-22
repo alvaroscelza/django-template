@@ -3,4 +3,7 @@
 # Tests and low level design
 coverage
 factory-boy
-pydeps
+pytest
+pytest-django
+pytest-dotenv
+pytest-mock
