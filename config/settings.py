@@ -17,18 +17,11 @@ BASE_DIR = Path(__file__).parent.parent
 CORS_ALLOW_ALL_ORIGINS = True
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost').split(',')
 DATABASE_ROUTERS = ('django_tenants.routers.TenantSyncRouter',)
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # or 'django_tenants.postgresql_backend'
-        'NAME': os.getenv('DATABASE_NAME'),
-        'USER': os.getenv('DATABASE_USER', 'postgres'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'postgres'),
-        'HOST': os.getenv('DATABASE_HOST', 'localhost'),
-        'PORT': os.getenv('DATABASE_PORT', '5432'),
-    }
-}
+# TODO:  In next line, use 'django_tenants.postgresql_backend' for multi tenants.
+DATABASES = {'default': {'ENGINE': 'django.db.backends.postgresql_psycopg2', 'NAME': os.getenv('DATABASE_NAME'),
+                         'USER': os.getenv('DATABASE_USER'), 'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+                         'HOST': os.getenv('DATABASE_HOST'), 'PORT': os.getenv('DATABASE_PORT')}}
 DEBUG = os.getenv('DEBUG', False)
-DOMAIN = os.getenv('DOMAIN', 'localhost')
 # region INSTALLED_APPS
 # TODO: keep this to use single tenant
 # DJANGO_APPS = [
