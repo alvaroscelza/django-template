@@ -1,92 +1,18 @@
-// API configuration
-const API_BASE_URL = window.location.origin + '/api/v1/';
+import React, { useState, useEffect } from 'react';
+import Accounts from './components/Accounts';
+import Concepts from './components/Concepts';
+import Transactions from './components/Transactions';
+import Dashboard from './components/Dashboard';
+import FinancialStrategyReport from './components/FinancialStrategy';
+import GoogleAuth from './components/GoogleAuth';
 
-// Global logout function
-const forceLogout = () => {
-    console.log('Forcing logout due to authentication error');
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('refresh_token');
-    localStorage.removeItem('user_data');
-    // Clear all localStorage to be safe
-    localStorage.clear();
-    window.location.href = window.location.origin;
-};
+export default function App() {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [currentView, setCurrentView] = useState('dashboard');
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
-// API client
-const api = axios.create({
-    baseURL: API_BASE_URL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
-});
-
-// Add auth token to requests
-api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('auth_token');
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-});
-
-// Handle auth errors and token refresh
-api.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-        const originalRequest = error.config;
-        
-        // Handle authentication errors
-        if (error.response?.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
-            
-            const refreshToken = localStorage.getItem('refresh_token');
-            if (refreshToken) {
-                try {
-                    // Try to refresh the token
-                    console.log('Attempting to refresh token...');
-                    // Use axios directly to avoid interceptor recursion
-                    const refreshResponse = await axios.post(`tenants/auth/google/refresh/`, {
-                        refresh_token: refreshToken
-                    }, {
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
-                    
-                    const newAccessToken = refreshResponse.data.access_token;
-                    console.log('Token refreshed successfully');
-                    localStorage.setItem('auth_token', newAccessToken);
-                    
-                    // Update the original request with new token
-                    originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-                    
-                    // Retry the original request
-                    console.log('Retrying original request with new token');
-                    return api(originalRequest);
-                } catch (refreshError) {
-                    // Refresh failed, logout user
-                    console.log('Token refresh failed:', refreshError);
-                    forceLogout();
-                    return Promise.reject(refreshError);
-                }
-            } else {
-                // No refresh token, logout user
-                forceLogout();
-                return Promise.reject(error);
-            }
-        }
-        return Promise.reject(error);
-    }
-);
-
-// Main App Component
-function App() {
-    const [user, setUser] = React.useState(null);
-    const [loading, setLoading] = React.useState(true);
-    const [currentView, setCurrentView] = React.useState('dashboard');
-    const [sidebarOpen, setSidebarOpen] = React.useState(false);
-
-    React.useEffect(() => {
+    useEffect(() => {
         // Check for token in URL params (from OAuth callback)
         const urlParams = new URLSearchParams(window.location.search);
         const urlToken = urlParams.get('token');
@@ -152,7 +78,6 @@ function App() {
         { name: 'Libro Diario', key: 'transactions', icon: 'fas fa-exchange-alt' },
         { name: 'Cuentas', key: 'accounts', icon: 'fas fa-wallet' },
         { name: 'Conceptos', key: 'concepts', icon: 'fas fa-tags' },
-        { name: 'Balances', key: 'balances', icon: 'fas fa-balance-scale' },
         { name: 'Estrategia Financiera', key: 'financial-strategy', icon: 'fas fa-chart-line' },
     ];
 
@@ -239,13 +164,8 @@ function App() {
                 {currentView === 'accounts' && <Accounts />}
                 {currentView === 'concepts' && <Concepts />}
                 {currentView === 'transactions' && <Transactions />}
-                {currentView === 'balances' && <BalancesReport onBack={() => setCurrentView('dashboard')} />}
                 {currentView === 'financial-strategy' && <FinancialStrategyReport onBack={() => setCurrentView('dashboard')} />}
             </div>
         </div>
     );
 }
-
-// Render the app
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);

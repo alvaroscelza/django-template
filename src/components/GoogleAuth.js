@@ -1,3 +1,6 @@
+import React from 'react';
+import axios from 'axios';
+
 function GoogleAuth({ onLogin }) {
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState('');
@@ -120,3 +123,5 @@ function GoogleAuth({ onLogin }) {
         </div>
     );
 }
+
+export default GoogleAuth;

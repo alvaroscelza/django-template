@@ -18,6 +18,32 @@ The application is a single-tenant financial management system.
 - Run using `python main.py runserver`
 - To see the documentation diagrams, you require [Graphviz](https://graphviz.org/).
 
+## Development
+For development with hot reloading:
+
+1. **Start Django backend:**
+   ```bash
+   python main.py runserver
+   ```
+
+2. **Start webpack dev server (in a separate terminal):**
+   ```bash
+   npm start
+   ```
+
+3. **Access the application:**
+    - **Development (with hot reload):** `http://localhost:3000/`
+    - **Development (without hot reload):** `http://localhost:8000/`
+
+      You don't need to run webpack dev server, but each time you change anything in the React files you need to rebuild
+      the frontend manually with `npm run build` and then reload django server.
+
+### How it works:
+- **Webpack dev server** watches your React files in `src/` and rebuilds automatically
+- **Hot reloading** updates the browser without full page refresh
+- **API calls** are proxied from `localhost:3000` to `localhost:8000`
+- **Static files** (CSS, images) are served from the `static/` directory
+
 ## Testing
 - Run the tests with `python main.py test`
 - Get test coverage with:
