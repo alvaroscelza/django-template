@@ -1,5 +1,4 @@
 # <<Project Name>>
-
 <<Project description.>>
 
 ## Technology Stack
@@ -42,7 +41,6 @@ For development with hot reloading:
 - **Webpack dev server** watches your React files in `src/` and rebuilds automatically
 - **Hot reloading** updates the browser without full page refresh
 - **API calls** are proxied from `localhost:3000` to `localhost:8000`
-- **Static files** (CSS, images) are served from the `static/` directory
 
 ## Testing
 - Run the tests with `python main.py test`
@@ -67,9 +65,3 @@ For development with hot reloading:
       far longer that this).
     - Click `Authorize` and now all endpoints should start working.
     - Have fun.
-
-## Re-generate translations
-- Install GNU gettext tools: https://www.gnu.org/software/gettext/
-- Run the following command to generate django.po file:
-  `django-admin makemessages -l es --all --ignore venv --no-location`
-- Once all the translations are made, run the command: `django-admin compilemessages`

@@ -10,22 +10,8 @@ drf-spectacular
 django-tenants
 psycopg[binary]
 
-# Excel creation
-openpyxl
-drf-excel
-beautifulsoup4
-xlrd
-
-#Emails
-certifi
-
 # Environment
 python-dotenv
 
 # Image handling
 Pillow
-
-# Utils
-django-debug-toolbar
-setuptools
-python-dateutil

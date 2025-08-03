@@ -1,31 +1,17 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FinApp - Gestión Financiera</title>
-    <link rel="icon" href="static/img/favicon.png" type="image/png">
-    <link rel="stylesheet" href="static/styles.css">
+    <title>Puntua - Reseñas de Empresas</title>
+    <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png">
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-<div id="root"></div>
-
-<!-- React and ReactDOM -->
-<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-
-<!-- Axios for API calls -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-<!-- Babel transformer -->
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-<!-- Component Scripts -->
-<script type="text/babel" src="/static/components/GoogleAuth.js"></script>
-<script type="text/babel" src="/static/components/Dashboard.js"></script>
-<script type="text/babel" src="/static/components/Accounts.js"></script>
-<script type="text/babel" src="/static/app.js"></script>
+    <div id="root"></div>
+    <script src="{% static 'bundles/bundle.js' %}"></script>
 </body>
 </html>

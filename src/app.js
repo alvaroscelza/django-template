@@ -1,171 +1,98 @@
 import React, { useState, useEffect } from 'react';
-import Accounts from './components/Accounts';
-import Concepts from './components/Concepts';
-import Transactions from './components/Transactions';
-import Dashboard from './components/Dashboard';
-import FinancialStrategyReport from './components/FinancialStrategy';
-import GoogleAuth from './components/GoogleAuth';
+import axios from 'axios';
+import Header from './components/Header';
+import CompanyList from './components/CompanyList';
+import BranchList from './components/BranchList';
 
-export default function App() {
-    const [user, setUser] = useState(null);
+// Main App Component
+function App() {
+    const [companies, setCompanies] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [currentView, setCurrentView] = useState('dashboard');
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [error, setError] = useState(null);
+    const [selectedCompany, setSelectedCompany] = useState(null);
 
     useEffect(() => {
-        // Check for token in URL params (from OAuth callback)
-        const urlParams = new URLSearchParams(window.location.search);
-        const urlToken = urlParams.get('token');
-
-        if (urlToken) {
-            // Save token and clean URL
-            localStorage.setItem('auth_token', urlToken);
-            window.history.replaceState({}, document.title, window.location.pathname);
-
-            // Decode token to get user info
-            try {
-                const payload = JSON.parse(atob(urlToken.split('.')[1]));
-                const userData = { 
-                    email: payload.sub,
-                    username: payload.sub.split('@')[0] // Extract username from email
-                };
-                localStorage.setItem('user_data', JSON.stringify(userData));
-                setUser(userData);
-            } catch (e) {
-                console.error('Failed to decode token:', e);
-                // Clear invalid token
-                localStorage.removeItem('auth_token');
-                localStorage.removeItem('user_data');
-            }
-        } else {
-            // Check existing stored token
-            const token = localStorage.getItem('auth_token');
-            const userData = localStorage.getItem('user_data');
-
-            if (token && userData) {
-                try {
-                    const parsedUserData = JSON.parse(userData);
-                    setUser(parsedUserData);
-                } catch (e) {
-                    console.error('Failed to parse stored user data:', e);
-                    // Clear invalid data
-                    localStorage.removeItem('auth_token');
-                    localStorage.removeItem('refresh_token');
-                    localStorage.removeItem('user_data');
-                }
-            }
-        }
-        setLoading(false);
+        fetchCompanies();
     }, []);
 
-    const handleLogin = (userData) => {
-        setUser(userData.user);
-        localStorage.setItem('auth_token', userData.access_token);
-        localStorage.setItem('refresh_token', userData.refresh_token);
-        localStorage.setItem('user_data', JSON.stringify(userData.user));
+    const fetchCompanies = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.get('/api/v1/core/companies/');
+            // Handle DRF pagination - access results array
+            const companiesData = response.data.results || response.data;
+            setCompanies(companiesData);
+            setError(null);
+        } catch (err) {
+            setError('Error al cargar empresas');
+            console.error('Error fetching companies:', err);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const handleLogout = () => {
-        setUser(null);
-        localStorage.removeItem('auth_token');
-        localStorage.removeItem('refresh_token');
-        localStorage.removeItem('user_data');
-        setCurrentView('dashboard');
+    const handleCompanySelect = (company) => {
+        setSelectedCompany(company);
     };
 
-    const navigation = [
-        { name: 'Dashboard', key: 'dashboard', icon: 'fas fa-tachometer-alt' },
-        { name: 'Libro Diario', key: 'transactions', icon: 'fas fa-exchange-alt' },
-        { name: 'Cuentas', key: 'accounts', icon: 'fas fa-wallet' },
-        { name: 'Conceptos', key: 'concepts', icon: 'fas fa-tags' },
-        { name: 'Estrategia Financiera', key: 'financial-strategy', icon: 'fas fa-chart-line' },
-    ];
+    const handleBackToCompanies = () => {
+        setSelectedCompany(null);
+    };
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="loading-spinner"></div>
+            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
+                    <p className="text-gray-600">Cargando empresas...</p>
+                </div>
             </div>
         );
     }
 
-    if (!user) {
-        return <GoogleAuth onLogin={handleLogin} />;
+    if (error) {
+        return (
+            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+                <div className="text-center">
+                    <div className="text-red-500 text-6xl mb-4">⚠️</div>
+                    <h2 className="text-2xl font-bold text-gray-800 mb-2">¡Ups!</h2>
+                    <p className="text-gray-600 mb-4">{error}</p>
+                    <button 
+                        onClick={fetchCompanies}
+                        className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+                    >
+                        Intentar de nuevo
+                    </button>
+                </div>
+            </div>
+        );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            {/* Mobile menu button */}
-            <div className="md:hidden fixed top-4 left-4 z-50">
-                <button
-                    onClick={() => setSidebarOpen(!sidebarOpen)}
-                    className="bg-white p-2 rounded-md shadow-md"
-                >
-                    <i className="fas fa-bars"></i>
-                </button>
-            </div>
-
-            {/* Sidebar */}
-            <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
-                <div className="app-header">
-                    <h1 className="app-title">
-                        <i className="fas fa-chart-line"></i>
-                        FinApp
-                    </h1>
-                    <button
-                        onClick={() => setSidebarOpen(false)}
-                        className="md:hidden text-gray-500 hover:text-gray-700 p-2 rounded-lg hover:bg-gray-100"
-                    >
-                        <i className="fas fa-times"></i>
-                    </button>
-                </div>
-
-                <nav className="sidebar-nav">
-                    {navigation.map((item) => (
-                        <button
-                            key={item.key}
-                            onClick={() => {
-                                setCurrentView(item.key);
-                                setSidebarOpen(false);
-                            }}
-                            className={`sidebar-nav-item ${
-                                currentView === item.key ? 'active' : ''
-                            }`}
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+            <Header />
+            
+            <main className="container mx-auto px-4 py-8">
+                {selectedCompany ? (
+                    <div>
+                        <button 
+                            onClick={handleBackToCompanies}
+                            className="mb-6 flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
                         >
-                            <i className={`${item.icon} mr-3`}></i>
-                            {item.name}
+                            <i className="fas fa-arrow-left mr-2"></i>
+                            Volver a Empresas
                         </button>
-                    ))}
-                </nav>
-
-                <div className="user-profile">
-                    <div className="user-avatar">
-                        {user.username ? user.username.charAt(0).toUpperCase() : 'U'}
+                        <BranchList company={selectedCompany} />
                     </div>
-                    <div className="user-info">
-                        <div className="user-name">{user.username}</div>
-                        <div className="user-email">{user.email}</div>
-                    </div>
-                </div>
-                <div className="user-logout">
-                    <button
-                        onClick={handleLogout}
-                        className="text-gray-400 hover:text-red-500 transition-colors w-full text-left py-2 px-4"
-                        title="Cerrar Sesión"
-                    >
-                        <i className="fas fa-sign-out-alt mr-2"></i> Cerrar Sesión
-                    </button>
-                </div>
-            </div>
-
-            {/* Main content */}
-            <div className="main-content">
-                {currentView === 'dashboard' && <Dashboard user={user} />}
-                {currentView === 'accounts' && <Accounts />}
-                {currentView === 'concepts' && <Concepts />}
-                {currentView === 'transactions' && <Transactions />}
-                {currentView === 'financial-strategy' && <FinancialStrategyReport onBack={() => setCurrentView('dashboard')} />}
-            </div>
+                ) : (
+                    <CompanyList 
+                        companies={companies} 
+                        onCompanySelect={handleCompanySelect}
+                    />
+                )}
+            </main>
         </div>
     );
 }
+
+export default App;

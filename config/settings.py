@@ -2,11 +2,10 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
-from django.utils.translation import gettext_lazy as _
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 APP_NAME = '<<app name>>'
-APP_DESCRIPTION = _('<<app description>>')
+APP_DESCRIPTION = '<<app description>>'
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', },
@@ -88,7 +87,7 @@ DEBUG = os.getenv('DEBUG', False)
 # endregion INSTALLED_APPS
 # region Internationalization
 LANGUAGE_CODE = 'es'
-LANGUAGES = [('es', _('Spanish'))]
+LANGUAGES = [('es', 'Spanish')]
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 TIME_ZONE = 'America/Montevideo'
 USE_I18N = True
@@ -99,6 +98,37 @@ DECIMAL_SEPARATOR = ','
 USE_THOUSAND_SEPARATOR = True
 THOUSAND_SEPARATOR = '.'
 # endregion
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'applications.core.models.company_branch': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}
 MIDDLEWARE = [
     'django_tenants.middleware.main.TenantMainMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -123,14 +153,12 @@ REST_FRAMEWORK = {
                                 'rest_framework.filters.OrderingFilter',
                                 'rest_framework.filters.SearchFilter'],
     'EXCEPTION_HANDLER': 'applications.utils.exception_handler',
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 20
 }
 ROOT_URLCONF = 'config.urls'
 SECRET_KEY = os.getenv('SECRET_KEY')
 SIMPLE_JWT = {'ACCESS_TOKEN_LIFETIME': timedelta(days=30)}
 # region Static files (CSS, JavaScript, Images)
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_storage')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
@@ -155,5 +183,4 @@ TEMPLATES = [{'BACKEND': 'django.template.backends.django.DjangoTemplates',
                                                  'django.contrib.messages.context_processors.messages']}}]
 TENANT_MODEL = 'tenants.Tenant'
 TENANT_DOMAIN_MODEL = 'tenants.Domain'
-TEST_RUNNER = 'applications.core.tests.en_test_runner.EnTestRunner'
 WSGI_APPLICATION = 'config.wsgi.application'

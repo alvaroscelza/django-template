@@ -40,7 +40,6 @@ urlpatterns += i18n_patterns(tenants_path, prefix_default_language=False)
 # endregion
 
 # region Media configuration
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # endregion
 

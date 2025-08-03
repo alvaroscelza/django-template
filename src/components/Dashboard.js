@@ -1,6 +1,3 @@
-import React from 'react';
-import api from '../api';
-
 function Dashboard({ user }) {
     const [dashboardData, setDashboardData] = React.useState(null);
     const [loading, setLoading] = React.useState(true);
@@ -300,5 +297,3 @@ function Dashboard({ user }) {
         </div>
     );
 }
-
-export default Dashboard;
