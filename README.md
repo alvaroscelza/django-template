@@ -19,17 +19,14 @@ The application is a single-tenant financial management system.
 
 ## Development
 For development with hot reloading:
-
 1. **Start Django backend:**
    ```bash
-   python main.py runserver
+   python production_main.py runserver
    ```
-
 2. **Start webpack dev server (in a separate terminal):**
    ```bash
    npm start
    ```
-
 3. **Access the application:**
     - **Development (with hot reload):** `http://localhost:3000/`
     - **Development (without hot reload):** `http://localhost:8000/`

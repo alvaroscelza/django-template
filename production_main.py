@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 import os
-import sys
+from datetime import date
 
 import django
 from django.contrib.auth import get_user_model
 from django.core.management import call_command
-from django.core.management import execute_from_command_line
 from dotenv import load_dotenv
-
 
 def main():
     load_dotenv()
@@ -22,18 +20,18 @@ def main():
 def _create_superuser_if_non_existent():
     user_model = get_user_model()
     superuser_name = os.environ.get("DJANGO_SUPERUSER_USERNAME")
-    print(f'Superuser name: {superuser_name}')
     if not user_model.objects.filter(username=superuser_name).exists():
-        call_command("createsuperuser", "--no-input")
+        superuser_email = os.environ.get("DJANGO_SUPERUSER_EMAIL")
+        superuser_password = os.environ.get("DJANGO_SUPERUSER_PASSWORD")
+        # noinspection PyUnresolvedReferences
+        create_superuser = user_model.objects.create_superuser
+        default_birthdate = date(1990, 1, 1)
+        create_superuser(username=superuser_name, email=superuser_email, password=superuser_password,
+                         birthdate=default_birthdate, life_expectancy=80)
 
 def _execute_run_command():
-    environment = os.environ.get("ENVIRONMENT", "development")
-    if environment == "development":
-        execute_from_command_line(sys.argv)
-    else:
-        gunicorn_command = f"gunicorn --timeout 600 config.wsgi:application"
-        os.execvp("gunicorn", gunicorn_command.split())
-
+    gunicorn_command = f"gunicorn --timeout 600 config.wsgi:application"
+    os.execvp("gunicorn", gunicorn_command.split())
 
 if __name__ == "__main__":
     main()

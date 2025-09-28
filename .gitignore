@@ -1,4 +1,4 @@
-# Dependencies
+# Node.js
 node_modules/
 
 # Auto-generated static files (webpack builds)
@@ -32,7 +32,10 @@ coverage.xml
 
 # IDEs
 .vscode/
-
+/.idea/workspace.xml
+/.idea/shelf/*
+/.idea/copilotDiffState.xml
+/.idea/copilot.*
 *.swp
 *.swo
 *~
@@ -52,3 +55,4 @@ Thumbs.db
 .env.development.local
 .env.test.local
 .env.production.local
+google-credentials.json

@@ -3,7 +3,7 @@ from datetime import timedelta
 from pathlib import Path
 
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
 APP_NAME = '<<app name>>'
 APP_DESCRIPTION = '<<app description>>'
 AUTH_PASSWORD_VALIDATORS = [
@@ -14,13 +14,13 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 BASE_DIR = Path(__file__).parent.parent
 CORS_ALLOW_ALL_ORIGINS = True
-CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost').split(',')
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS').split(',')
 DATABASE_ROUTERS = ('django_tenants.routers.TenantSyncRouter',)
 # TODO:  In next line, use 'django_tenants.postgresql_backend' for multi tenants.
 DATABASES = {'default': {'ENGINE': 'django.db.backends.postgresql_psycopg2', 'NAME': os.getenv('DATABASE_NAME'),
                          'USER': os.getenv('DATABASE_USER'), 'PASSWORD': os.getenv('DATABASE_PASSWORD'),
                          'HOST': os.getenv('DATABASE_HOST'), 'PORT': os.getenv('DATABASE_PORT')}}
-DEBUG = os.getenv('DEBUG', False)
+DEBUG = os.getenv('DEBUG')
 # region INSTALLED_APPS
 # TODO: keep this to use single tenant
 # DJANGO_APPS = [
@@ -41,7 +41,6 @@ DEBUG = os.getenv('DEBUG', False)
 #     'drf_spectacular',
 #     'django_filters',
 #     'drf_excel',
-#     'debug_toolbar',
 # ]
 # INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + EXTERNAL_APPS
 # TODO: keep this to use multi tenant
