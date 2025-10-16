@@ -12,6 +12,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator', },
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', },
 ]
+AUTH_USER_MODEL = "tenants.User"  # TODO: remove if tenants is not used
 BASE_DIR = Path(__file__).parent.parent
 CORS_ALLOW_ALL_ORIGINS = True
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS').split(',')
@@ -129,7 +130,7 @@ LOGGING = {
     },
 }
 MIDDLEWARE = [
-    'django_tenants.middleware.main.TenantMainMiddleware',
+    'django_tenants.middleware.main.UserTenantMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',

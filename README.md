@@ -6,16 +6,15 @@
 - Django 5
 - PostgreSQL 17
 
-## Multi-tenancy Architecture
-The application is a single-tenant financial management system.
-
 ## Installation and running
 - Create a virtual environment and activate it. Example: `virtualenv venv`
 - Enter environment: Example: `.venv\Scripts\activate`
 - Install requirements: `pip install -r requirements.dev.txt`
 - Create `.env` file at project root. File .env-example is provided as a guide of this file's content.
+- Make migrations: `python manage.py makemigrations`
+- Apply migrations: `python manage.py migrate`
+- In production, collect static files: `python manage.py collectstatic`
 - Run using `python main.py runserver`
-- To see the documentation diagrams, you require [Graphviz](https://graphviz.org/).
 
 ## Development
 For development with hot reloading:
@@ -38,9 +37,10 @@ For development with hot reloading:
 - **Webpack dev server** watches your React files in `src/` and rebuilds automatically
 - **Hot reloading** updates the browser without full page refresh
 - **API calls** are proxied from `localhost:3000` to `localhost:8000`
+- **Static files** (CSS, images) are served from the `static/` directory
 
 ## Testing
-- Run the tests with `python main.py test`
+- Run the tests with `pytest`
 - Get test coverage with:
     - `coverage run --source='.' -m pytest`
     - `coverage report --skip-covered --show-missing`
