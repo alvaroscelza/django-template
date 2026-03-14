@@ -1,9 +1,0 @@
--r requirements.txt
-
-# Tests and low level design
-coverage
-factory-boy
-pytest
-pytest-django
-pytest-dotenv
-pytest-mock

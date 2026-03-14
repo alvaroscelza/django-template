@@ -1,3 +1,41 @@
+[project]
+name = "django-template"
+version = "0.1.0"
+description = "Django template with DRF, multi-tenant support and React frontend"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    # WEB / API
+    "django",
+    "django-filter",
+    "djangorestframework",
+    "djangorestframework-simplejwt",
+    "django-cors-headers",
+    "drf-spectacular",
+    # Database
+    "django-tenants",
+    "psycopg[binary]",
+    # Environment
+    "python-dotenv",
+    # Image handling
+    "Pillow",
+    # Google OAuth
+    "authlib",
+    "google-auth",
+    "google-auth-httplib2",
+    "google-auth-oauthlib",
+]
+
+[dependency-groups]
+dev = [
+    "coverage",
+    "factory-boy",
+    "pytest",
+    "pytest-django",
+    "pytest-dotenv",
+    "pytest-mock",
+]
+
 [tool.isort]
 profile = "black"
 multi_line_output = 3

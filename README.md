@@ -5,22 +5,22 @@
 - Python 3.13
 - Django 5
 - PostgreSQL 17
+- [UV](https://docs.astral.sh/uv/) for dependency management (replaces pip; uses `pyproject.toml` and optional `uv.lock`)
 
 ## Installation and running
-- Create a virtual environment and activate it. Example: `virtualenv venv`
-- Enter environment: Example: `.venv\Scripts\activate`
-- Install requirements: `pip install -r requirements.dev.txt`
-- Create `.env` file at project root. File .env-example is provided as a guide of this file's content.
-- Make migrations: `python manage.py makemigrations`
-- Apply migrations: `python manage.py migrate`
-- In production, collect static files: `python manage.py collectstatic`
-- Run using `python main.py runserver`
+
+- Create virtual environment and install dependencies: `uv sync` (installs from `pyproject.toml`; use `uv sync --no-dev` for production or CI/CD). No need to activate the env—`uv run` uses the project’s `.venv` automatically.
+- Create `.env` file at project root. File `.env-example` is provided as a guide for this file's content.
+- Make migrations: `uv run python manage.py makemigrations`
+- Apply migrations: `uv run python manage.py migrate`
+- In production, collect static files: `uv run python manage.py collectstatic`
+- Run using `uv run python main.py runserver`
 
 ## Development
 For development with hot reloading:
 1. **Start Django backend:**
    ```bash
-   python production_main.py runserver
+   uv run python production_main.py runserver
    ```
 2. **Start webpack dev server (in a separate terminal):**
    ```bash
@@ -40,10 +40,10 @@ For development with hot reloading:
 - **Static files** (CSS, images) are served from the `static/` directory
 
 ## Testing
-- Run the tests with `pytest`
+- Run the tests with `uv run pytest`
 - Get test coverage with:
-    - `coverage run --source='.' -m pytest`
-    - `coverage report --skip-covered --show-missing`
+    - `uv run coverage run --source='.' -m pytest`
+    - `uv run coverage report --skip-covered --show-missing`
 
 ## Using Swagger for API documentation
 - Run project
