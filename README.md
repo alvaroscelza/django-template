@@ -21,7 +21,7 @@ This repository is a reusable starter template for Django MVC projects. It has b
 
 ## Technology Stack
 - Python 3.13
-- Django 5
+- Django 6
 - PostgreSQL 17
 - [UV](https://docs.astral.sh/uv/) for dependency management (replaces pip; uses `pyproject.toml` and optional `uv.lock`)
 
