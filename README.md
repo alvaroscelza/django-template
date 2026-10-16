@@ -1,3 +1,21 @@
+# Django MVC starter template
+
+This repository is a reusable starter template for Django MVC projects. It has been maintained since 2021.
+
+**Stack** (checked against this repository):
+
+- Python 3.13 (`requires-python` in `pyproject.toml`)
+- Django 6.0.3 (the version resolved in `uv.lock`; the template README below still says Django 5)
+- PostgreSQL 17 (the version the template is written for; the app uses the PostgreSQL backend via psycopg)
+- [uv](https://docs.astral.sh/uv/) for Python dependency management (`pyproject.toml` and `uv.lock`)
+- React, built with webpack: hot reload, and an API proxy from the webpack dev server to Django
+
+**How to use it:** create a new repository with **Use this template**, or clone this one. Then replace the `<<...>>` placeholders (project name, description, app name, and repository name) and replace the template README below with documentation for your project.
+
+---
+
+## Template README (replace when starting a project)
+
 # <<Project Name>>
 <<Project description.>>
 
